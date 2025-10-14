@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-image: url("backgropung image.jpg"); 
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .login-box {
+      background: #c4bcac;
+      padding: 50px 30px 30px 30px; 
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      width: 350px;
+      position: relative;
+      text-align: center;
+    }
+
+    /* Logo styling */
+    .login-box .logo {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 4px solid #fff;
+      position: absolute;
+      top: -60px;           
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+    }
+
+    .login-box h2 {
+      margin-bottom: 20px;
+      margin-top: 60px; 
+      color: #333;
+    }
+
+    .login-box label {
+      display: block;
+      margin: 10px 0 5px;
+      font-weight: bold;
+      text-align: left;
+    }
+
+    .login-box input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #d9a3a3;
+      border-radius: 6px;
+    }
+
+    .login-box button {
+      width: 100%;
+      padding: 12px;
+      background: #ddc33e;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .login-box button:hover {
+      background: #ddd75a;
+    }
+
+    .error {
+      color: red;
+      font-size: 14px;
+      margin-top: -10px;
+      margin-bottom: 10px;
+      text-align: left;
+    }
+
+    .register-link {
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .register-link a {
+      color: #76230a;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .register-link a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-box">
+    <!-- Logo Image -->
+    <img src="images/logo.png" alt="Logo" class="logo">
+
+    <h2>Login</h2>
+    <form id="loginForm">
+      <label for="email">Email</label>
+      <input type="email" id="email" placeholder="Enter your email">
+      <p id="emailError" class="error"></p>
+
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="Enter your password">
+      <p id="passwordError" class="error"></p>
+
+      <!-- FIX: Correct button type -->
+      <button type="submit">Login</button>
+
+      <!-- Register message -->
+      <p class="register-link">
+        Don't have an account? <a href="register.html">Register here</a>
+      </p>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const enteredUsername = document.getElementById('email').value.trim();
+      const registeredUsername = localStorage.getItem('userEmail');
+      const enteredPassword = document.getElementById('password').value.trim();
+      const registeredPassword = localStorage.getItem('userPassword');
+        console.log(registeredUsername, registeredPassword,"dsgdrgfsdg");
+        console.log(enteredUsername, enteredPassword,"sfsdf");
+      if (enteredUsername === registeredUsername && enteredPassword === registeredPassword) {
+        window.location.href = 'categary screen.html';
+      } else {
+        alert('Invalid email or password!');
+      }
+    });
+  </script>
+
+</body>
+</html>

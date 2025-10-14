@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Microwaves - SWEE HUB</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .cart-btn {
+      background: #f1c40f;
+      border: none;
+      padding: 10px 15px;
+      margin: 5px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    .cart-btn:hover {
+      background: black;
+      color: white;
+    }
+    .stock {
+      font-size: 14px;
+      margin-top: 5px;
+      color: green;
+      font-weight: bold;
+    }
+    .out-of-stock {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Microwaves - SWEE HUB</h1>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="categories.html">Categories</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="cart.html">🛒 Cart (<span id="cart-count">0</span>)</a></li>
+    </ul>
+  </nav>
+
+  <section class="container">
+    <h2>Microwaves</h2>
+    <div class="grid">
+
+      <!-- LG Microwave -->
+      <div class="card">
+        <img src="lg micro.jpg" alt="LG Microwave">
+        <h3>LG Convection Microwave</h3>
+        <p>Perfect for baking, grilling, reheating, and defrosting with multiple auto-cook menus.</p>
+        <div class="price">
+          <p><del>₹20,000</del> <strong>₹17,999 (10% OFF)</strong></p>
+        </div>
+        <p class="stock" id="stock-lg">Available Stock: 6</p>
+        <button class="cart-btn" onclick="addToCart('LG Convection Microwave', 17999, 'stock-lg', this)">Add to Cart</button>
+        <button class="cart-btn" onclick="buyNow('LG Convection Microwave', 17999)">Buy Now</button>
+      </div>
+
+      <!-- Samsung Microwave -->
+      <div class="card">
+        <img src="samsung micro.jpg" alt="Samsung Microwave">
+        <h3>Samsung Grill Microwave</h3>
+        <p>Compact design with grill function, perfect for small families and quick cooking.</p>
+        <div class="price">
+          <p><del>₹15,000</del> <strong>₹13,499 (10% OFF)</strong></p>
+        </div>
+        <p class="stock" id="stock-samsung">Available Stock: 4</p>
+        <button class="cart-btn" onclick="addToCart('Samsung Grill Microwave', 13499, 'stock-samsung', this)">Add to Cart</button>
+        <button class="cart-btn" onclick="buyNow('Samsung Grill Microwave', 13499)">Buy Now</button>
+      </div>
+
+      <!-- IFB Microwave -->
+      <div class="card">
+        <img src="ifb micro.jpg" alt="IFB Microwave">
+        <h3>IFB Solo Microwave</h3>
+        <p>Simple and efficient microwave for everyday use, with energy-saving technology.</p>
+        <div class="price">
+          <p><del>₹12,000</del> <strong>₹10,799 (10% OFF)</strong></p>
+        </div>
+        <p class="stock" id="stock-ifb">Available Stock: 7</p>
+        <button class="cart-btn" onclick="addToCart('IFB Solo Microwave', 10799, 'stock-ifb', this)">Add to Cart</button>
+        <button class="cart-btn" onclick="buyNow('IFB Solo Microwave', 10799)">Buy Now</button>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 SWEE HUB | All Rights Reserved</p>
+  </footer>
+
+  <script>
+    // Load cart from localStorage
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    // Update cart count
+    function updateCartCount() {
+      document.getElementById("cart-count").textContent = cart.length;
+    }
+    updateCartCount();
+
+    // Add to cart with stock management
+    function addToCart(product, price, stockId, button) {
+      let stockElement = document.getElementById(stockId);
+      let stockText = stockElement.textContent;
+      let available = parseInt(stockText.replace(/\D/g, ""));
+
+      if (available > 0) {
+        cart.push({ product, price });
+        localStorage.setItem("cart", JSON.stringify(cart));
+        updateCartCount();
+
+        available -= 1;
+        stockElement.textContent = "Available Stock: " + available;
+
+        if (available === 0) {
+          stockElement.textContent = "Out of Stock";
+          stockElement.classList.add("out-of-stock");
+          button.disabled = true;
+          button.style.background = "gray";
+          button.style.cursor = "not-allowed";
+        }
+
+        alert(product + " added to cart!");
+      } else {
+        alert(product + " is Out of Stock!");
+      }
+    }
+
+    // Buy now function
+    function buyNow(product, price) {
+      localStorage.setItem("checkout", JSON.stringify({ product, price }));
+      window.location.href = "checkout.html"; // redirect to checkout
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laptops - SWEE HUB</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .cart-btn {
+      background: #f1c40f;
+      border: none;
+      padding: 10px 15px;
+      margin: 5px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    .cart-btn:hover {
+      background: black;
+      color: white;
+    }
+    .stock {
+      font-size: 14px;
+      margin-top: 5px;
+      color: green;
+      font-weight: bold;
+    }
+    .out-of-stock {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Laptops - SWEE HUB</h1>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="categories.html">Categories</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="cart.html">🛒 Cart (<span id="cart-count">0</span>)</a></li>
+    </ul>
+  </nav>
+
+  <section class="container">
+    <h2>Laptops</h2>
+    <div class="grid">
+
+      <!-- MacBook Pro -->
+      <div class="card">
+        <img src="macbook.png" alt="MacBook Pro">
+        <h3>MacBook Pro</h3>
+        <p>Apple laptop with M2 chip, perfect for professionals, creative work, and smooth multitasking.</p>
+        <div class="price">
+          <p><del>₹1,60,000</del> <strong>₹1,48,999 (7% OFF)</strong></p>
+        </div>
+        <p class="stock" id="stock-macbook">Available Stock: 5</p>
+        <button class="cart-btn" onclick="addToCart('MacBook Pro', 148999, 'stock-macbook')">Add to Cart</button>
+        <button class="cart-btn" onclick="buyNow('MacBook Pro', 148999)">Buy Now</button>
+      </div>
+
+      <!-- Dell XPS -->
+      <div class="card">
+        <img src="images/dell.png" alt="Dell XPS">
+        <h3>Dell XPS</h3>
+        <p>High-performance ultrabook with sleek design, stunning display, and long battery life.</p>
+        <div class="price">
+          <p><del>₹1,40,000</del> <strong>₹1,27,999 (9% OFF)</strong></p>
+        </div>
+        <p class="stock" id="stock-dell">Available Stock: 3</p>
+        <button class="cart-btn" onclick="addToCart('Dell XPS', 127999, 'stock-dell')">Add to Cart</button>
+        <button class="cart-btn" onclick="buyNow('Dell XPS', 127999)">Buy Now</button>
+      </div>
+
+      <!-- HP Pavilion -->
+      <div class="card">
+        <img src="images/hp.png" alt="HP Pavilion">
+        <h3>HP Pavilion</h3>
+        <p>Affordable laptop with reliable performance, ideal for students and daily use.</p>
+        <div class="price">
+          <p><del>₹70,000</del> <strong>₹62,999 (10% OFF)</strong></p>
+        </div>
+        <p class="stock" id="stock-hp">Available Stock: 8</p>
+        <button class="cart-btn" onclick="addToCart('HP Pavilion', 62999, 'stock-hp')">Add to Cart</button>
+        <button class="cart-btn" onclick="buyNow('HP Pavilion', 62999)">Buy Now</button>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 SWEE HUB | All Rights Reserved</p>
+  </footer>
+
+  <script>
+    // Load cart from localStorage
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    // Update cart count
+    function updateCartCount() {
+      document.getElementById("cart-count").textContent = cart.length;
+    }
+    updateCartCount();
+
+    // Add to cart function with stock check
+    function addToCart(product, price, stockId) {
+      let stockElement = document.getElementById(stockId);
+      let stockText = stockElement.textContent;
+      let available = parseInt(stockText.replace(/\D/g, ""));
+
+      if (available > 0) {
+        cart.push({ product, price });
+        localStorage.setItem("cart", JSON.stringify(cart));
+        updateCartCount();
+
+        available -= 1;
+        stockElement.textContent = "Available Stock: " + available;
+
+        if (available === 0) {
+          stockElement.textContent = "Out of Stock";
+          stockElement.classList.add("out-of-stock");
+        }
+
+        alert(product + " added to cart!");
+      } else {
+        alert(product + " is Out of Stock!");
+      }
+    }
+
+    // Buy now function
+    function buyNow(product, price) {
+      localStorage.setItem("checkout", JSON.stringify({ product, price }));
+      window.location.href = "checkout.html"; // redirect to checkout
+    }
+  </script>
+</body>
+</html>

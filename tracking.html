@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Tracking - SWEE HUB</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f8f8f8;
+    }
+
+    header {
+      background: rgba(51, 51, 51, 0.9);
+      color: white;
+      padding: 15px;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 40px auto;
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .tracking {
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      margin: 40px 0;
+    }
+
+    .tracking::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: #ccc;
+      z-index: 1;
+      transform: translateY(-50%);
+    }
+
+    .step {
+      position: relative;
+      text-align: center;
+      width: 25%;
+      z-index: 2;
+    }
+
+    .step .circle {
+      width: 40px;
+      height: 40px;
+      background: #ccc;
+      border-radius: 50%;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: white;
+    }
+
+    .step.active .circle {
+      background: #27ae60;
+    }
+
+    .step p {
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    .order-details {
+      margin-top: 30px;
+      background: #f1f1f1;
+      padding: 15px;
+      border-radius: 8px;
+    }
+
+    .order-details p {
+      margin: 8px 0;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Order Tracking - SWEE HUB</h1>
+</header>
+
+<div class="container">
+  <h2>Track Your Order</h2>
+
+  <!-- ✅ Order Tracking Steps -->
+  <div class="tracking">
+    <div class="step active">
+      <div class="circle">1</div>
+      <p>Packed</p>
+    </div>
+    <div class="step active">
+      <div class="circle">2</div>
+      <p>In Transit</p>
+    </div>
+    <div class="step">
+      <div class="circle">3</div>
+      <p>Out for Delivery</p>
+    </div>
+    <div class="step">
+      <div class="circle">4</div>
+      <p>Delivered</p>
+    </div>
+  </div>
+
+  <!-- ✅ Order Information -->
+  <div class="order-details">
+    <p><strong>Order ID:</strong> #SW123456</p>
+    <p><strong>Estimated Delivery:</strong> 20th Sept 2025</p>
+    <p><strong>Courier:</strong> BlueDart Express</p>
+    <p><strong>Current Status:</strong> 🚚 In Transit</p>
+  </div>
+</div>
+
+</body>
+</html>

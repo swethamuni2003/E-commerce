@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mobiles - SWEE HUB</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .cart-btn {
+      background: #f1c40f;
+      border: none;
+      padding: 10px 15px;
+      margin: 5px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    .cart-btn:hover {
+      background: black;
+      color: white;
+    }
+    .out-of-stock {
+      background: gray !important;
+      cursor: not-allowed;
+    }
+    .stock {
+      font-weight: bold;
+      margin-top: 5px;
+      color: green;
+    }
+    .stock.out {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Mobiles - SWEE HUB</h1>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="categories.html">Categories</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="cart.html">🛒 Cart (<span id="cart-count">0</span>)</a></li>
+    </ul>
+  </nav>
+
+  <section class="container">
+    <h2>Mobiles</h2>
+    <div class="grid">
+      
+      <!-- iPhone Card -->
+      <div class="card">
+        <img src="apple phone.jpg" alt="iPhone">
+        <h3>iPhone 15</h3>
+        <p>Latest Apple smartphone with advanced features, stunning camera, and smooth iOS experience.</p>
+        <div class="price">
+          <p><del>₹90,000</del> <strong>₹82,999 (8% OFF)</strong></p>
+        </div>
+        <p id="stock-iphone" class="stock">Available Stock: 4</p>
+        <button id="btn-iphone-cart" class="cart-btn" onclick="addToCart('iPhone 15', 82999, 'iphone')">Add to Cart</button>
+        <button id="btn-iphone-buy" class="cart-btn" onclick="buyNow('iPhone 15', 82999, 'iphone')">Buy Now</button>
+      </div>
+
+      <!-- Samsung Card -->
+      <div class="card">
+        <img src="samsung mobile.jpg" alt="Samsung">
+        <h3>Samsung Galaxy S24</h3>
+        <p>High-performance smartphone with excellent display, long battery life, and AI features.</p>
+        <div class="price">
+          <p><del>₹75,000</del> <strong>₹68,499 (9% OFF)</strong></p>
+        </div>
+        <p id="stock-samsung" class="stock">Available Stock: 5</p>
+        <button id="btn-samsung-cart" class="cart-btn" onclick="addToCart('Samsung Galaxy S24', 68499, 'samsung')">Add to Cart</button>
+        <button id="btn-samsung-buy" class="cart-btn" onclick="buyNow('Samsung Galaxy S24', 68499, 'samsung')">Buy Now</button>
+      </div>
+
+      <!-- OnePlus Card -->
+      <div class="card">
+        <img src="oneplus.jpg" alt="OnePlus">
+        <h3>OnePlus 12</h3>
+        <p>Flagship killer with smooth performance, premium design, and super-fast charging.</p>
+        <div class="price">
+          <p><del>₹60,000</del> <strong>₹54,999 (8% OFF)</strong></p>
+        </div>
+        <p id="stock-oneplus" class="stock">Available Stock: 6</p>
+        <button id="btn-oneplus-cart" class="cart-btn" onclick="addToCart('OnePlus 12', 54999, 'oneplus')">Add to Cart</button>
+        <button id="btn-oneplus-buy" class="cart-btn" onclick="buyNow('OnePlus 12', 54999, 'oneplus')">Buy Now</button>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 SWEE HUB | All Rights Reserved</p>
+  </footer>
+
+  <script>
+    // Load cart from localStorage
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    // Initial stock values
+    let stock = JSON.parse(localStorage.getItem("stockMobiles")) || {
+      iphone: 4,
+      samsung: 5,
+      oneplus: 6
+    };
+
+    // Update cart count
+    function updateCartCount() {
+      document.getElementById("cart-count").textContent = cart.length;
+    }
+    updateCartCount();
+
+    // Update stock display
+    function updateStockDisplay() {
+      for (let key in stock) {
+        let stockElement = document.getElementById("stock-" + key);
+        let cartBtn = document.getElementById("btn-" + key + "-cart");
+        let buyBtn = document.getElementById("btn-" + key + "-buy");
+
+        if (stock[key] > 0) {
+          stockElement.textContent = "Available Stock: " + stock[key];
+          stockElement.classList.remove("out");
+          cartBtn.disabled = false;
+          buyBtn.disabled = false;
+          cartBtn.classList.remove("out-of-stock");
+          buyBtn.classList.remove("out-of-stock");
+        } else {
+          stockElement.textContent = "Out of Stock";
+          stockElement.classList.add("out");
+          cartBtn.disabled = true;
+          buyBtn.disabled = true;
+          cartBtn.classList.add("out-of-stock");
+          buyBtn.classList.add("out-of-stock");
+        }
+      }
+    }
+
+    // Add to cart function
+    function addToCart(product, price, key) {
+      if (stock[key] > 0) {
+        cart.push({ product, price });
+        stock[key]--; // decrease stock
+        localStorage.setItem("cart", JSON.stringify(cart));
+        localStorage.setItem("stockMobiles", JSON.stringify(stock));
+        updateCartCount();
+        updateStockDisplay();
+        alert(product + " added to cart!");
+      }
+    }
+
+    // Buy now function
+    function buyNow(product, price, key) {
+      if (stock[key] > 0) {
+        stock[key]--; // decrease stock
+        localStorage.setItem("stockMobiles", JSON.stringify(stock));
+        updateStockDisplay();
+        localStorage.setItem("checkout", JSON.stringify({ product, price }));
+        window.location.href = "checkout.html"; // redirect to checkout page
+      }
+    }
+
+    // Initialize stock display
+    updateStockDisplay();
+  </script>
+</body>
+</html>

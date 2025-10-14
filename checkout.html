@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout - SWEE HUB</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f8f8f8;
+      margin: 0;
+      padding: 0;
+    }
+
+    header, footer {
+      background: #f1c40f;
+      text-align: center;
+      padding: 15px;
+    }
+
+    nav ul {
+      display: flex;
+      justify-content: center;
+      list-style: none;
+      background: #333;
+      margin: 0;
+      padding: 10px;
+    }
+
+    nav ul li {
+      margin: 0 15px;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .checkout-container {
+      width: 80%;
+      margin: 30px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 12px;
+      text-align: center;
+    }
+
+    th {
+      background: #f1c40f;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .pay-btn {
+      background: #27ae60;
+      color: white;
+    }
+
+    .qr-section {
+      display: none;
+      text-align: center;
+      margin-top: 15px;
+      background: #f9f9f9;
+      padding: 15px;
+      border-radius: 8px;
+    }
+
+    .qr-section img {
+      width: 180px;
+      height: 180px;
+      margin-top: 10px;
+    }
+
+    footer p {
+      margin: 0;
+    }
+
+    /* ✅ Order Success Section */
+    .success-container {
+      display: none;
+      text-align: center;
+      background: #fff;
+      margin: 50px auto;
+      padding: 40px;
+      width: 60%;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .success-container img {
+      width: 100px;
+      margin-bottom: 20px;
+    }
+
+    .success-container h2 {
+      color: #2ecc71;
+      margin-bottom: 10px;
+    }
+
+    .order-summary-box {
+      background: #f1f3f6;
+      padding: 15px;
+      border-radius: 10px;
+      display: inline-block;
+      text-align: left;
+      margin: 15px 0;
+    }
+
+    .continue-btn {
+      background: #34495e;
+      color: #fff;
+      padding: 10px 25px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .continue-btn:hover {
+      background: #2c3e50;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Checkout</h1>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="categories.html">Categories</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="cart.html">🛒 Cart</a></li>
+    </ul>
+  </nav>
+
+  <div class="checkout-container" id="checkoutSection">
+    <h2>Order Summary</h2>
+    <table id="checkoutTable">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <h2 id="finalTotal">Total: ₹0</h2>
+
+    <h2>Enter Your Details</h2>
+    <form onsubmit="placeOrder(event)">
+      <label>Name:</label><br />
+      <input type="text" required /><br /><br />
+      <label>Address:</label><br />
+      <textarea required></textarea><br /><br />
+      <label>Payment Method:</label><br />
+      <select id="paymentMethod" required onchange="toggleQR()">
+        <option value="">--Select--</option>
+        <option value="upi">UPI</option>
+        <option value="card">Credit/Debit Card</option>
+        <option value="cod">Cash on Delivery</option>
+      </select><br /><br />
+
+      <!-- GPay QR Section -->
+      <div class="qr-section" id="qrSection">
+        <h3>Scan & Pay using GPay</h3>
+        <p>Use any UPI app (Google Pay, PhonePe, Paytm, etc.) to scan below QR:</p>
+        <img src="scan qr image.jpg" alt="GPay QR" />
+        <p><strong>UPI ID:</strong> sweehub@okaxis</p>
+      </div>
+
+      <button type="submit" class="btn pay-btn">Place Order</button>
+    </form>
+  </div>
+
+  <!-- ✅ Success Message -->
+  <div class="success-container" id="successSection">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Yes_Check_Circle.svg/768px-Yes_Check_Circle.svg.png" alt="Success" />
+    <h2>Order Successful!</h2>
+    <p>Thank you for your purchase.</p>
+
+    <div class="order-summary-box" id="orderSummaryBox">
+      <strong>Order Summary:</strong><br />
+      <span id="orderDetails"></span><br />
+      <span id="orderTotal"></span>
+    </div>
+
+    <p>Your order will be shipped soon.</p>
+    <button class="continue-btn" onclick="window.location.href='index.html'">Continue Shopping</button>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 SWEE HUB | All Rights Reserved</p>
+  </footer>
+
+  <script>
+    let checkoutItems = JSON.parse(localStorage.getItem("checkout")) || [];
+    if (!Array.isArray(checkoutItems)) {
+      checkoutItems = [checkoutItems];
+    }
+
+    function renderCheckout() {
+      const tbody = document.querySelector("#checkoutTable tbody");
+      tbody.innerHTML = "";
+      let total = 0;
+
+      checkoutItems.forEach(item => {
+        total += item.price;
+        tbody.innerHTML += `
+          <tr>
+            <td>${item.product}</td>
+            <td>₹${item.price}</td>
+          </tr>`;
+      });
+
+      document.getElementById("finalTotal").textContent = "Total: ₹" + total;
+    }
+
+    function toggleQR() {
+      const method = document.getElementById("paymentMethod").value;
+      const qrSection = document.getElementById("qrSection");
+      qrSection.style.display = method === "upi" ? "block" : "none";
+    }
+
+    function placeOrder(event) {
+      event.preventDefault();
+      const checkoutSection = document.getElementById("checkoutSection");
+      const successSection = document.getElementById("successSection");
+
+      // Show order summary
+      let summary = checkoutItems.map(i => `${i.product} - ₹${i.price}`).join("<br>");
+      let total = checkoutItems.reduce((sum, i) => sum + i.price, 0);
+
+      document.getElementById("orderDetails").innerHTML = summary;
+      document.getElementById("orderTotal").textContent = "Total: ₹" + total;
+
+      // Hide checkout, show success
+      checkoutSection.style.display = "none";
+      successSection.style.display = "block";
+
+      // Clear cart
+      localStorage.removeItem("cart");
+      localStorage.removeItem("checkout");
+    }
+
+    renderCheckout();
+  </script>
+</body>
+</html>
